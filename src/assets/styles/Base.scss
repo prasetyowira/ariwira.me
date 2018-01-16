@@ -1,0 +1,16 @@
+@import "Reset";
+@import "Variables";
+
+body {
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  font-size: $font-size;
+  width: 100%;
+  height: 100%;
+  font-family: $font-text;
+  font-weight: 300;
+  background-color: $body-bgcolor;
+  color: $body-color;
+  overflow-x: hidden;
+}
