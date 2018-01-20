@@ -20,11 +20,20 @@
       </div>
     </div>
     <div class="terminal-body">
-      <div class="profile">
-        yoga@yoga-mbp:~
+      <div class="terminal-body-content">
+        <p v-for="(reply, index) in replies" :key="index">
+          {{ reply }}
+        </p>
       </div>
-      <div class="input">
-        <input type="text">
+      <div class="terminal-body-input">
+        <div class="profile">
+          yoga@yoga-mbp:~
+        </div>
+        <div class="input">
+          <form v-on:submit.prevent="checkEnter" action="">
+            <input type="text" value="input" v-model="input">
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -33,81 +42,34 @@
 <script>
 export default {
   name: "wira-terminal",
+  data () {
+    return {
+      input: "",
+      replies: []
+    }
+  },
+  methods: {
+    checkEnter() {
+      let msg = this.$data.input;
+      if (msg == "tes"){
+        this.$data.replies.push("asd");
+      }
+      else if (msg == "clear"){
+        this.$data.replies = [];
+        console.log(this.$data.replies)
+        console.log(this.$data.input)
+      }else {
+        this.$data.replies.push("bash:  " + msg + ": command not found")
+      }
 
+      this.$data.input = ""
+    }
+  }
 }
 </script>
 
 <style lang='scss' scoped>
 @import "~@/assets/styles/Variables";
-.terminal{
-  position: relative;
-  height: 350px;
-  width: 700px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  background-color: $terminal-bgcolor;
+@import "./style.scss";
 
-  &-header{
-    height: 20px;
-    background-color: rgb(140, 140, 140);
-    border-bottom: 1px solid #fefefe;
-    box-shadow: .5px .1px #fefefe;
-    position: relative;
-    
-    .action{
-      position: absolute;
-      left: 10px;
-      top: 3px;
-      display: flex;
-
-      &-x, &-strip, &-window{
-        font-size: 7px;
-        margin-right: 5px;
-
-        .fa-times, .fa-minus, .fa-expand{
-          color: black;
-        }
-    }
-      
-      &-x{
-        .fa-circle{
-          color: #ff5050;
-        }
-      }
-      &-strip{
-        .fa-circle{
-          color: #ffbc00;
-        }
-      }
-      &-window{
-        .fa-circle{
-          color: #2ed62e;
-        }
-      }
-    }
-    .title{
-      text-align: center;
-      color: #000;
-    }
-  }
-
-  &-body{
-    position: absolute;
-    display: flex;
-    bottom: 0px;
-    left: 2px;
-    color: #fff;
-
-    input{
-      background-color: transparent;
-      border: none;
-      color: #fff;
-      width: 570px;
-
-      &:focus{
-        outline: none;
-      }
-    }
-  }
-}
 </style>
